@@ -137,9 +137,24 @@ class Player(pygame.sprite.Sprite):
             return
 
 
+class Camera:
+    def __init__(self):
+        self.dx = 0
+        self.dy = 0
+
+    def apply(self, obj):
+        obj.rect.x += self.dx
+        obj.rect.y += self.dy
+
+    def update(self, target):
+        self.dx = -(target.rect.x + target.rect.w // 2 - size[0] // 2)
+        self.dy = -(target.rect.y + target.rect.h // 2 - size[1] // 2)
+
+
 def main():
     pygame.init()
     start_screen()
+    camera = Camera()
     running = True
     player, level_x, level_y = generate_level(load_level(good_map))
     while running:
@@ -157,6 +172,9 @@ def main():
                     player.move(2)
         screen.fill((255, 255, 255))
         player.update()
+        camera.update(player)
+        for sprite in all_sprites:
+            camera.apply(sprite)
         tiles_group.draw(screen)
         player_group.draw(screen)
         clock.tick(50)
