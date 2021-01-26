@@ -10,6 +10,7 @@ player_group = pygame.sprite.Group()
 tile_width = tile_height = 50
 size = []
 clock = pygame.time.Clock()
+good_map = input()
 
 
 def load_level(filename):
@@ -23,7 +24,7 @@ def load_level(filename):
     return level
 
 
-load_level('map.txt')
+load_level(good_map)
 
 
 def generate_level(level):
@@ -140,7 +141,7 @@ def main():
     pygame.init()
     start_screen()
     running = True
-    player, level_x, level_y = generate_level(load_level('map.txt'))
+    player, level_x, level_y = generate_level(load_level(good_map))
     while running:
         for event in pygame.event.get():
             if pygame.QUIT == event.type:
